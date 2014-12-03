@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# bin/release <build-dir>
+
+rust_path=`ls -1d "$1/rust/"*"/"`
+if [ ! -x "$rust_path/bin/rustc" ]; then
+echo "failed: Cannot find rust binaries at $rust_path/bin"
+exit 1
+fi
+
+cat << EOF
+---
+config_vars:
+  PATH: $rust_path:$PATH
+EOF
