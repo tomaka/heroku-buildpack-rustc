@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir>
+
+. "$1/RustConfig"
+
+# Check our configuration options.
+if [ -z "$URL" ]; then
+echo "failed: RustConfig must set URL to point to a Rust binary tarball."
+exit 1
+fi
+
+cd "$1"
+
+echo "-----> Downloading Rust version $VERSION binaries from $URL"
+rm -f rust.tar.gz
+curl -o rust.tar.gz "$URL"
+
+echo "-----> Extracting Rust in ./rust"
+mkdir rust
+tar xzf rust.tar.gz -C ./rust
+rm -r rust.tar.gz
